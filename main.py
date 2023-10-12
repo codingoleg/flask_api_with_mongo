@@ -22,7 +22,7 @@ def generate_hash(json_data) -> str:
 
 
 @app.route(ROUTE_PROBLEMS, methods=['POST'])
-def submit_issue() -> json:
+def submit_issue() -> str:
     # Преобразуем headers и body запроса в отдельные словари
     headers = {key.lower(): value.lower() for key, value in request.headers}
     body = json.loads(request.data.lower())
