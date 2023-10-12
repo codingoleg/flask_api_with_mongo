@@ -7,7 +7,7 @@ from config import *
 app = Flask(__name__)
 app_client = app.test_client()
 
-db_client = pymongo.MongoClient(host=DB_HOST, port=DB_PORT)
+db_client = pymongo.MongoClient(f'mongodb://{DB_HOST}:{DB_PORT}/')
 current_db = db_client[DB_NAME]
 collection = current_db[COLLECTION_NAME]
 
@@ -37,7 +37,7 @@ def submit_issue() -> json:
 
 @app.route(ROUTE_FIND, methods=['POST'])
 def find_issues_by_body() -> json:
-    """Ищет и возвращает все записи по любому из значений запроса body."""
+    """Ищет и возвращает все записи по любому из значений, указанных в body"""
     query = json.loads(request.data.lower())
     results = []
     for key, value in query.items():
@@ -67,4 +67,5 @@ def find_issues_by_hash() -> json:
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host=FLASK_HOST, port=FLASK_PORT)
+
